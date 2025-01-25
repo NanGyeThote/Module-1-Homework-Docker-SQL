@@ -12,7 +12,7 @@ RUN pip install pandas
 ENTRYPOINT [ "bash" ]
 ```
 
-### ------- Docker Command To test the PIP Version ----------------
+### ------- Docker Command To test the PIP Version -------
 
 - I run 
 ```bash
