@@ -109,3 +109,59 @@ as shown in my answer
 ```
 
 I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
+
+------------------------------------------------------------------------------------------------------
+
+# Question 5. Three biggest pickup zones
+
+```bash
+# Load taxi zone lookup file to map LocationID to zone names
+zones = pd.read_csv('taxi_zone_lookup.csv')
+
+# Initialize a dictionary to track total amount per pickup location
+pickup_totals = {}
+
+# Read the dataset in chunks
+df_iter = pd.read_csv(
+    'green_tripdata_2019-10.csv',
+    iterator=True,
+    chunksize=100000,
+    dtype={'total_amount': float, 'PULocationID': int},
+    parse_dates=['lpep_pickup_datetime'],
+    low_memory=False
+)
+
+# Process each chunk
+for df in df_iter:
+    # Filter data for 2019-10-18
+    df_filtered = df[df['lpep_pickup_datetime'].dt.date == pd.to_datetime('2019-10-18').date()]
+    
+    # Sum total_amount per pickup location
+    pickup_sums = df_filtered.groupby('PULocationID')['total_amount'].sum()
+    
+    # Accumulate total amounts across chunks
+    for loc_id, total in pickup_sums.items():
+        if total > 13000:
+            pickup_totals[loc_id] = pickup_totals.get(loc_id, 0) + total
+
+# Sort pickup locations by total_amount
+top_pickups = sorted(pickup_totals.items(), key=lambda x: x[1], reverse=True)
+
+# Check how many locations meet the criteria
+print(f"Total locations with total_amount > 13000: {len(top_pickups)}")
+
+# Get the top 3 locations if available
+top_pickup_names = [zones.loc[zones['LocationID'] == pid, 'Zone'].values[0] for pid, _ in top_pickups[:3]]
+
+# Print the result
+print(f"The top pickup locations with total_amount > 13,000 on 2019-10-18 were: {', '.join(top_pickup_names)}")
+```
+
+## Answers:
+```bash
+as shown in my answer
+```
+
+I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
+
+------------------------------------------------------------------------------------------------------
