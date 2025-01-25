@@ -63,7 +63,7 @@ volumes:
 ```
 
 ## Answer:
-The hostname and port that pgadmin should use to connect to the Postgres database are:
+The **hostname** and **port** that **pgadmin** should use to connect to the Postgres database are:
 ```bash
 db:5432
 ```
