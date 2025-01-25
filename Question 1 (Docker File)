@@ -8,5 +8,5 @@ ENTRYPOINT [ "bash" ]
 # ------- Docker Command To test the PIP Version ----------------
 
 # I run docker build -t test1:pandas .
-# Then I run docker run -it test:pandas
+# Then I run docker run -it test1:pandas
 # I tried pip --version then I got the value of 24.3.1 in python 3.12.8
