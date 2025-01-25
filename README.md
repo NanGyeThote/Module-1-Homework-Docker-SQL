@@ -22,7 +22,7 @@ docker build -t test1:pandas .
 ```bash
 docker run -it test:pandas
 ```
-- I tried pip --version then I got the value of **24.3.1** in python **3.12.8**
+- I tried pip --version then I got my answer.
 
 ------------------------------------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ volumes:
 ## Answer:
 The **hostname** and **port** that **pgadmin** should use to connect to the Postgres database are:
 ```bash
-db:5432
+as shown in my answer
 ```
 
 ------------------------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ print(counts)
 
 ## Answers:
 ```bash
-104,838; 199,013; 109,645; 27,688; 35,202
+as shown in my answer
 ```
 
 I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
