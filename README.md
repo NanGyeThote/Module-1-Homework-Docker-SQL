@@ -67,3 +67,45 @@ The **hostname** and **port** that **pgadmin** should use to connect to the Post
 ```bash
 db:5432
 ```
+
+------------------------------------------------------------------------------------------------------
+
+# Question 3. Trip Segmentation Count
+
+```bash
+# Initialize counters
+counts = {
+    'up_to_1_mile': 0,
+    'between_1_and_3_miles': 0,
+    'between_3_and_7_miles': 0,
+    'between_7_and_10_miles': 0,
+    'over_10_miles': 0
+}
+
+df_iter = pd.read_csv(
+    'green_tripdata_2019-10.csv',
+    iterator=True,
+    chunksize=100000,
+    dtype={'trip_distance': float},
+    parse_dates=['lpep_pickup_datetime', 'lpep_dropoff_datetime'],
+    low_memory=False
+)
+
+# Process each chunk
+for df in df_iter:
+    counts['up_to_1_mile'] += (df['trip_distance'] <= 1).sum()
+    counts['between_1_and_3_miles'] += ((df['trip_distance'] > 1) & (df['trip_distance'] <= 3)).sum()
+    counts['between_3_and_7_miles'] += ((df['trip_distance'] > 3) & (df['trip_distance'] <= 7)).sum()
+    counts['between_7_and_10_miles'] += ((df['trip_distance'] > 7) & (df['trip_distance'] <= 10)).sum()
+    counts['over_10_miles'] += (df['trip_distance'] > 10).sum()
+
+# Print final counts
+print(counts)
+```
+
+## Answers:
+```bash
+104,838; 199,013; 109,645; 27,688; 35,202
+```
+
+I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
