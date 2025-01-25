@@ -165,3 +165,53 @@ as shown in my answer
 I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
 
 ------------------------------------------------------------------------------------------------------
+
+# Question 6. Largest tip
+
+```bash
+# Load your dataset
+df = pd.read_csv('green_tripdata_2019-10.csv', dtype={'column_name': str}, low_memory=False)
+
+# Convert 'lpep_pickup_datetime' and 'lpep_dropoff_datetime' to datetime if not already
+df['lpep_pickup_datetime'] = pd.to_datetime(df['lpep_pickup_datetime'])
+df['lpep_dropoff_datetime'] = pd.to_datetime(df['lpep_dropoff_datetime'])
+
+# Filter for pickups in "East Harlem North" and within October 2019
+east_harlem_north = df[(df['PULocationID'] == 74) & 
+                       (df['lpep_pickup_datetime'].dt.month == 10) & 
+                       (df['lpep_pickup_datetime'].dt.year == 2019)]
+
+# Group by dropoff location and get the dropoff zone with the largest tip
+dropoff_zone_with_largest_tip = east_harlem_north.groupby('DOLocationID')['tip_amount'].max().idxmax()
+
+# Find the drop-off zone corresponding to that DOLocationID
+# Assuming 'taxi_zone_lookup.csv' contains the mapping between LocationID and Zone
+zone_lookup = pd.read_csv('taxi_zone_lookup.csv')
+
+# Find the zone name
+largest_tip_zone = zone_lookup[zone_lookup['LocationID'] == dropoff_zone_with_largest_tip]['Zone'].values[0]
+
+print(f"The drop-off zone with the largest tip is: {largest_tip_zone}")
+```
+
+## Answers:
+```bash
+as shown in my answer
+```
+
+I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
+
+------------------------------------------------------------------------------------------------------
+
+# Question 7. Terraform Workflow
+
+I have some pre-knowledge about Terraform!
+
+## Answers:
+```bash
+as shown in my answer
+```
+
+------------------------------------------------------------------------------------------------------
+
+
