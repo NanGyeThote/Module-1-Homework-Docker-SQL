@@ -1,7 +1,7 @@
 # Module-1-Homework-Docker-SQL
 Contains codes for solving the Module 1 Homework: Docker &amp; SQL
 
-# Question 1. Understanding docker first run
+## Question 1. Understanding docker first run
 
 ### This is Docker File !
 ```bash
@@ -26,7 +26,7 @@ docker run -it test:pandas
 
 ------------------------------------------------------------------------------------------------------
 
-# Question 2: Understanding Docker Networking and Docker-Compose
+## Question 2: Understanding Docker Networking and Docker-Compose
 
 Given the following `docker-compose.yaml`:
 
@@ -70,9 +70,11 @@ as shown in my answer
 
 ------------------------------------------------------------------------------------------------------
 
-# Question 3. Trip Segmentation Count
+## Question 3. Trip Segmentation Count
 
 ```bash
+import pandas as pd
+
 # Initialize counters
 counts = {
     'up_to_1_mile': 0,
@@ -112,9 +114,56 @@ I run with this because when i tried copying from Jupyter Notebook to ny_taxi da
 
 ------------------------------------------------------------------------------------------------------
 
-# Question 5. Three biggest pickup zones
+## Question 4. Longest trip for each day
 
 ```bash
+import pandas as pd
+
+# Initialize variables to track the longest trip
+longest_trip = {'date': None, 'distance': 0}
+
+# Read the dataset in chunks
+df_iter = pd.read_csv(
+    'green_tripdata_2019-10.csv',
+    iterator=True,
+    chunksize=100000,
+    dtype={'trip_distance': float},
+    parse_dates=['lpep_pickup_datetime'],
+    low_memory=False
+)
+
+# Process each chunk
+for df in df_iter:
+    # Extract the pickup date
+    df['pickup_date'] = df['lpep_pickup_datetime'].dt.date
+    
+    # Find the longest trip in the current chunk
+    max_trip = df.loc[df['trip_distance'].idxmax()]
+    
+    # Compare with the longest trip found so far
+    if max_trip['trip_distance'] > longest_trip['distance']:
+        longest_trip['distance'] = max_trip['trip_distance']
+        longest_trip['date'] = max_trip['pickup_date']
+
+# Print the final result
+print(f"The pickup day with the longest trip distance was {longest_trip['date']}")
+
+```
+
+## Answers:
+```bash
+as shown in my answer
+```
+
+I run with this because when i tried copying from Jupyter Notebook to ny_taxi database, the data had type error and not all rows had been inserted.
+
+------------------------------------------------------------------------------------------------------
+
+## Question 5. Three biggest pickup zones
+
+```bash
+import pandas as pd
+
 # Load taxi zone lookup file to map LocationID to zone names
 zones = pd.read_csv('taxi_zone_lookup.csv')
 
@@ -169,6 +218,8 @@ I run with this because when i tried copying from Jupyter Notebook to ny_taxi da
 # Question 6. Largest tip
 
 ```bash
+import pandas as pd
+
 # Load your dataset
 df = pd.read_csv('green_tripdata_2019-10.csv', dtype={'column_name': str}, low_memory=False)
 
