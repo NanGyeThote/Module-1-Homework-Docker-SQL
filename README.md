@@ -215,7 +215,7 @@ I run with this because when i tried copying from Jupyter Notebook to ny_taxi da
 
 ------------------------------------------------------------------------------------------------------
 
-# Question 6. Largest tip
+## Question 6. Largest tip
 
 ```bash
 import pandas as pd
@@ -254,7 +254,7 @@ I run with this because when i tried copying from Jupyter Notebook to ny_taxi da
 
 ------------------------------------------------------------------------------------------------------
 
-# Question 7. Terraform Workflow
+## Question 7. Terraform Workflow
 
 I have some pre-knowledge about Terraform!
 
